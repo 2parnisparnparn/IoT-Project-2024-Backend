@@ -1,14 +1,15 @@
 const { initializeApp } = require('firebase/app');
 const { getFirestore } = require('firebase/firestore');
+require('dotenv').config();
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBCHbesW3iU3irBfJ9QjIEBme1PRlJWP_s",
-    authDomain: "iot-project-2024-33f4c.firebaseapp.com",
-    projectId: "iot-project-2024-33f4c",
-    storageBucket: "iot-project-2024-33f4c.appspot.com",
-    messagingSenderId: "78986530697",
-    appId: "1:78986530697:web:9513d5cffd295023c99b58"
-  };
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKET,
+    messagingSenderId: process.env.MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID
+};
 
 // Initialize Firebase app
 const firebaseApp = initializeApp(firebaseConfig);
