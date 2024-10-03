@@ -1,44 +1,38 @@
-const { collection, setDoc, doc, query, where, getDocs } = require('firebase/firestore');
-const firestore = require('../config/firebase');
+// controllers/userController.js
+const UserModel = require('../models/UserModel');
 
 // Create a new user
 exports.createUser = async (req, res) => {
-  const { phone_number, password, full_name, credit } = req.body;
+    const { phone_number, password, full_name, credit } = req.body;
 
-  const userData = {
-    phone_number,
-    password,
-    full_name,
-    credit,
-  };
+    const userData = {
+        phone_number,
+        password,
+        full_name,
+        credit,
+    };
 
-  try {
-    await setDoc(doc(collection(firestore, "Users"), phone_number), userData);
-    res.status(200).send(`User added with phone number: ${phone_number}`);
-  } catch (e) {
-    res.status(500).send('Error adding user: ' + e.message);
-  }
+    try {
+        const result = await UserModel.createUser(userData);
+        res.status(200).send(result.message);
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
 };
 
 // Get user by phone number
 exports.getUserByPhoneNumber = async (req, res) => {
-  const { phone_number } = req.query;
+    const { phone_number } = req.params;
 
-  try {
-    const userQuery = query(collection(firestore, "Users"), where("phone_number", "==", phone_number));
-    const querySnapshot = await getDocs(userQuery);
-    
-    if (querySnapshot.empty) {
-      return res.status(404).send('User not found');
+    try {
+        const result = await UserModel.getUserByPhoneNumber(phone_number);
+        
+        if (!result.success) {
+            return res.status(404).send(result.message);
+        }
+
+        res.status(200).json(result.data);
+    } catch (e) {
+        res.status(500).send(e.message);
     }
-
-    const users = [];
-    querySnapshot.forEach((doc) => {
-      users.push({ id: doc.id, ...doc.data() });
-    });
-
-    res.status(200).json(users);
-  } catch (e) {
-    res.status(500).send('Error fetching user: ' + e.message);
-  }
 };
