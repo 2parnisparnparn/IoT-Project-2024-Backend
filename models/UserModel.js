@@ -33,6 +33,28 @@ class UserModel {
             throw new Error('Error fetching user: ' + e.message);
         }
     }
+
+    static async login(phone_number, password) {
+        try {
+            const userQuery = query(collection(firestore, "Users"), where("phone_number", "==", phone_number));
+            const querySnapshot = await getDocs(userQuery);
+            
+            if (querySnapshot.empty) {
+                return { success: false, message: 'User not found' };
+            }
+
+            const user = querySnapshot.docs[0].data();
+
+            // ตรวจสอบรหัสผ่าน
+            if (user.password !== password) {
+                return { success: false, message: 'Incorrect password' };
+            }
+
+            return { success: true, data: { id: querySnapshot.docs[0].id, ...user } };
+        } catch (e) {
+            throw new Error('Error during login: ' + e.message);
+        }
+    }
 }
 
 module.exports = UserModel;
