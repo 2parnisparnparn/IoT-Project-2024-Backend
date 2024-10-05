@@ -14,7 +14,7 @@ router.post('/add-bill', billController.addBill);
 router.get('/bills/:phone_number', billController.getBillsByPhoneNumber);
 
 
-// Route to handle adding a new bottle
+// Bottle routes
 router.post('/add-bottle', bottleController.addBottle);
 router.get('/bottle/:bottle_type', bottleController.getBottleByType);
 

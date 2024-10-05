@@ -23,13 +23,13 @@ class Bottle {
     static async getBottleByType(bottle_type) {
         try {
             const bottlesRef = collection(firestore, 'bottles');
-            const q = query(bottlesRef, where('bottle_type', '==', bottle_type));  // Correct query setup
+            const q = query(bottlesRef, where('bottle_type', '==', bottle_type));  
             const querySnapshot = await getDocs(q);
 
             const bottles = [];
             querySnapshot.forEach((docSnapshot) => {
                 const bottleData = docSnapshot.data();
-                bottleData.bottle_id = docSnapshot.id;  // Include the bottle ID in the response
+                bottleData.bottle_id = docSnapshot.id; 
                 bottles.push(bottleData);
             });
 

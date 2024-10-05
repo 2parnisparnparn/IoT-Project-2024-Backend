@@ -17,7 +17,6 @@ class Bill {
                 phone_number: billData.phone_number
             });
 
-            //update the user credit based on phone number
             if (billData.phone_number) {
                 const userId = await Bill.updateUserCreditByPhone(billData.phone_number, billData.credit);
                 await Bill.linkBillToUser(billData.phone_number, billRef.id);
