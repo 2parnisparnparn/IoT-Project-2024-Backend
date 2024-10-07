@@ -10,6 +10,7 @@ class Bottle {
             await setDoc(bottleRef, {
                 bottle_id: bottleRef.id,
                 bottle_type: bottleData.bottle_type,
+                bottle_Etype: bottleData.bottle_Etype,
                 carbon_credit: bottleData.carbon_credit
             });
             return { message: 'Bottle added successfully', bottle_id: bottleRef.id };
@@ -20,10 +21,10 @@ class Bottle {
     }
 
     // Fetch a bottle by its type
-    static async getBottleByType(bottle_type) {
+    static async getBottleByType(bottle_Etype) {
         try {
             const bottlesRef = collection(firestore, 'bottles');
-            const q = query(bottlesRef, where('bottle_type', '==', bottle_type));  
+            const q = query(bottlesRef, where('bottle_Etype', '==', bottle_Etype));  
             const querySnapshot = await getDocs(q);
 
             const bottles = [];
@@ -34,7 +35,7 @@ class Bottle {
             });
 
             if (bottles.length === 0) {
-                throw new Error(`No bottles found for bottle type ${bottle_type}`);
+                throw new Error(`No bottles found for bottle type ${bottle_Etype}`);
             }
 
             return bottles;

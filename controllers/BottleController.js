@@ -1,7 +1,7 @@
 const Bottle = require('../models/BottleModel');
 
 exports.addBottle = async (req, res) => {
-    const { bottle_type, carbon_credit } = req.body; 
+    const { bottle_type, bottle_Etype,carbon_credit } = req.body; 
 
    
     if (!bottle_type || !carbon_credit) {
@@ -10,7 +10,7 @@ exports.addBottle = async (req, res) => {
 
     try {
        
-        const result = await Bottle.addBottle({ bottle_type, carbon_credit });
+        const result = await Bottle.addBottle({ bottle_type, bottle_Etype, carbon_credit });
         res.status(200).json(result); 
     } catch (e) {
         console.error('Error in addBottle:', e);
