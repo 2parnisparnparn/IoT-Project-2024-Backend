@@ -3,18 +3,12 @@ const UserModel = require('../models/UserModel');
 
 // Create a new user
 exports.createUser = async (req, res) => {
-    const { phone_number, password, full_name, credit } = req.body;
-
-    const userData = {
-        phone_number,
-        password,
-        full_name,
-        credit,
-    };
+    const userData = req.body;
 
     try {
         const result = await UserModel.createUser(userData);
-        res.status(200).send(result.message);
+        res.status(200).json(result );
+        return result
     } catch (e) {
         res.status(500).send(e.message);
     }
