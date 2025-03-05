@@ -31,5 +31,6 @@ router.put('/update/:phone_number/credit', creditController.updatePoints);
 //Collection 
 router.get('/collection', CollectionController.PastCollection);
 router.get('/count-collection', CollectionController.CollectionByDate);
+router.post('/addPastCollection', CollectionController.addPastCollection);
 
 module.exports = router;
