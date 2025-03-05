@@ -2,7 +2,6 @@ const { collection, setDoc, doc, updateDoc, increment, query, where, getDocs } =
 const firestore = require('../config/firebase');
 
 class Bill {
-    // Create a new bill 
     static async createBill(billData) {
         try {
             const billRef = doc(collection(firestore, 'bills'));
@@ -14,7 +13,8 @@ class Bill {
                 bottles: billData.bottles, 
                 all_count: billData.all_count,
                 credit: billData.credit,
-                phone_number: billData.phone_number
+                phone_number: billData.phone_number,
+                date: new Date() 
             });
 
             if (billData.phone_number) {
@@ -29,7 +29,6 @@ class Bill {
         }
     }
 
-    // Link the bill to a user in the user_bills collection
     static async linkBillToUser(phone_number, billId) {
         try {
             const userBillsRef = collection(firestore, 'user_bills');
@@ -48,7 +47,6 @@ class Bill {
         }
     }
 
-    // Update the user credit based on phone number
     static async updateUserCreditByPhone(phoneNumber, billCredit) {
         try {
             const usersRef = collection(firestore, 'Users');
@@ -80,7 +78,6 @@ class Bill {
         }
     }
 
-    // Fetch all bills associated with a specific phone number
     static async getBillsByPhoneNumber(phoneNumber) {
         try {
             const billsRef = collection(firestore, 'bills');
