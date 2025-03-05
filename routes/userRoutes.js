@@ -3,6 +3,7 @@ const UserController = require('../controllers/userController');
 const billController = require('../controllers/BillController');
 const bottleController = require('../controllers/BottleController');
 const creditController = require('../controllers/creditController');
+const CollectionController = require('../controllers/CollectionController');
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ router.post('/create-user', UserController.createUser);
 router.get('/users/:phone_number', UserController.getUserByPhoneNumber);
 
 // Login user
-router.post('/login', UserController.login); // เพิ่มเส้นทางเข้าสู่ระบบ
+router.post('/login', UserController.login); 
 // Bill routes
 router.post('/add-bill', billController.addBill);
 router.get('/bills/:phone_number', billController.getBillsByPhoneNumber);
@@ -25,5 +26,9 @@ router.get('/bottle/:bottle_type', bottleController.getBottleByType);
 
 // Exchange Points
 router.put('/update/:phone_number/credit', creditController.updatePoints);
+
+
+//Collection 
+router.get('/collection', CollectionController.PastCollection);
 
 module.exports = router;
